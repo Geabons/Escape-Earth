@@ -11,6 +11,7 @@ const GAME_API = "https://spacescavanger.onrender.com/";
     const startData = await startResponse.json();
     console.log("Challenge started:", startData);
 
+    //TASK 1
     const sunResponse = await fetch(`${SOLAR_API}bodies/sun`);
     const sunData = await sunResponse.json();
     //console.log("sun data:", sunData);
@@ -27,6 +28,7 @@ const GAME_API = "https://spacescavanger.onrender.com/";
     const answerData1 = await answerResponse1.json();
     console.log("Answer response:", answerData1);
 
+    //TASK 2
     const earthResponse = await fetch(`${SOLAR_API}bodies/earth`);
     const earthData = await earthResponse.json();
     const earthAxialTilt = earthData.axialTilt;
