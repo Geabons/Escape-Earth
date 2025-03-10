@@ -80,7 +80,7 @@ const GAME_API = "https://spacescavanger.onrender.com/";
 
     allBodiesData.bodies.forEach((body) => {
       if (body.isPlanet && typeof body.sideralRotation === "number") {
-        let shortestPossibleDay = Math.abs(body.sideralRotation)
+        let shortestPossibleDay = Math.abs(body.sideralRotation);
         if (shortestPossibleDay < shortestDay) {
           shortestDay = shortestPossibleDay;
           shortestDayPlanet = body.englishName;
@@ -117,6 +117,36 @@ const GAME_API = "https://spacescavanger.onrender.com/";
     console.log("Answer response:", answerData4);
     //#endregion
 
+    //TASK 5
+    //#region
+    //console.log(jupiterData)
+    let largestMoonName = null;
+    let largestMoon = 0;
+
+    const jupiterMoonsData = jupiterData.moons;
+
+    for (const moon of jupiterMoonsData) {
+      const response = await fetch(moon.rel);
+      const data = await response.json();
+
+      if (data.aroundPlanet && typeof data.meanRadius === "number") {
+        let largestMoonPossible = Math.abs(data.meanRadius);
+        if (largestMoonPossible > largestMoon) {
+          largestMoon = largestMoonPossible;
+          largestMoonName = data.englishName;
+        }
+      }
+    }
+    console.log("largest moon: ", largestMoonName);
+
+    const answerResponse5 = await fetch(`${GAME_API}answer`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ answer: largestMoonName, player: playerId }),
+    });
+    const answerData5 = await answerResponse5.json();
+    console.log("Answer response:", answerData5);
+    //#endregion
   } catch (error) {
     console.error("Error:", error);
   }
